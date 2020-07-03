@@ -42,16 +42,21 @@ class Product
     /**
      * @ORM\ManyToMany(targetEntity=Section::class, inversedBy="products")
      */
-    private $categories;
+    private $sections;
 
     /**
      * @ORM\OneToMany(targetEntity=Offer::class, mappedBy="product", orphanRemoval=true)
      */
     private $offers;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $xmlId;
+
     public function __construct()
     {
-        $this->categories = new ArrayCollection();
+        $this->sections = new ArrayCollection();
         $this->offers = new ArrayCollection();
     }
 
@@ -111,24 +116,24 @@ class Product
     /**
      * @return Collection|Section[]
      */
-    public function getCategories(): Collection
+    public function getSections(): Collection
     {
-        return $this->categories;
+        return $this->sections;
     }
 
-    public function addCategory(Section $category): self
+    public function addSection(Section $section): self
     {
-        if (!$this->categories->contains($category)) {
-            $this->categories[] = $category;
+        if (!$this->sections->contains($section)) {
+            $this->sections[] = $section;
         }
 
         return $this;
     }
 
-    public function removeCategory(Section $category): self
+    public function removeSection(Section $section): self
     {
-        if ($this->categories->contains($category)) {
-            $this->categories->removeElement($category);
+        if ($this->sections->contains($section)) {
+            $this->sections->removeElement($section);
         }
 
         return $this;
@@ -161,6 +166,18 @@ class Product
                 $offer->setProduct(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getXmlId(): ?string
+    {
+        return $this->xmlId;
+    }
+
+    public function setXmlId(?string $xmlId): self
+    {
+        $this->xmlId = $xmlId;
 
         return $this;
     }

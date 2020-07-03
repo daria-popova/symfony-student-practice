@@ -25,14 +25,19 @@ class Section
     private $name;
 
     /**
-     * @ORM\Column(type="array", nullable=true)
-     */
-    private $pictures = [];
-
-    /**
      * @ORM\ManyToMany(targetEntity=Product::class, mappedBy="category")
      */
     private $products;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Section::class)
+     */
+    private $parent;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $xmlId;
 
     public function __construct()
     {
@@ -56,17 +61,7 @@ class Section
         return $this;
     }
 
-    public function getPictures(): ?array
-    {
-        return $this->pictures;
-    }
 
-    public function setPictures(?array $pictures): self
-    {
-        $this->pictures = $pictures;
-
-        return $this;
-    }
 
     /**
      * @return Collection|Product[]
@@ -92,6 +87,30 @@ class Section
             $this->products->removeElement($product);
             $product->removeCategory($this);
         }
+
+        return $this;
+    }
+
+    public function getParent(): ?self
+    {
+        return $this->parent;
+    }
+
+    public function setParent(?self $parent): self
+    {
+        $this->parent = $parent;
+
+        return $this;
+    }
+
+    public function getXmlId(): ?string
+    {
+        return $this->xmlId;
+    }
+
+    public function setXmlId(?string $xmlId): self
+    {
+        $this->xmlId = $xmlId;
 
         return $this;
     }

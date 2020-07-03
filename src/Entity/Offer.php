@@ -60,6 +60,11 @@ class Offer
      */
     private $propertyValues;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $picture;
+
     public function __construct()
     {
         $this->propertyValues = new ArrayCollection();
@@ -181,6 +186,18 @@ class Offer
                 $propertyValue->setOffer(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPicture(): ?string
+    {
+        return $this->picture;
+    }
+
+    public function setPicture(?string $picture): self
+    {
+        $this->picture = $picture;
 
         return $this;
     }
