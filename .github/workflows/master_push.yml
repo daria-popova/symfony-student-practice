@@ -15,7 +15,7 @@ jobs:
           username: ${{ secrets.PRACT_USERNAME }}
           port: ${{ secrets.PRACT_PORT }}
           key: ${{ secrets.PRACT_KEY }}
-          run: |
+          script: |
             cd modules/symfony-student-practice
             git pull origin master
             git status
@@ -27,7 +27,7 @@ jobs:
           username: ${{ secrets.PRACT_USERNAME }}
           port: ${{ secrets.PRACT_PORT }}
           key: ${{ secrets.PRACT_KEY }}
-          run: |
+          script: |
             cd modules/symfony-student-practice
             docker-compose build && docker-compose up -d
             
@@ -38,7 +38,7 @@ jobs:
           username: ${{ secrets.PRACT_USERNAME }}
           port: ${{ secrets.PRACT_PORT }}
           key: ${{ secrets.PRACT_KEY }}
-          run: |
+          script: |
             docker exec -it pract_php bash
             composer install
             
@@ -49,6 +49,6 @@ jobs:
           username: ${{ secrets.PRACT_USERNAME }}
           port: ${{ secrets.PRACT_PORT }}
           key: ${{ secrets.PRACT_KEY }}
-          run: |
+          script: |
             docker exec -it pract_php bash
             php bin/console doctrine:migrations:migrate --no-interaction
