@@ -1,0 +1,56 @@
+name: Автодеплой на тестовый сервер
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  job-one:
+    name: AutoDeploy
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Получение актуальных обновлений из ветки MASTER
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PRACT_HOST }}
+          username: ${{ secrets.PRACT_USERNAME }}
+          port: ${{ secrets.PRACT_PORT }}
+          key: ${{ secrets.PRACT_KEY }}
+          run: |
+            cd modules/symfony-student-practice
+            git pull origin master
+            git status
+            
+      - name: Сборка и запуск Docker контейнеров
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PRACT_HOST }}
+          username: ${{ secrets.PRACT_USERNAME }}
+          port: ${{ secrets.PRACT_PORT }}
+          key: ${{ secrets.PRACT_KEY }}
+          run: |
+            cd modules/symfony-student-practice
+            docker-compose build && docker-compose up -d
+            
+      - name: Установка новых зависимостей
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PRACT_HOST }}
+          username: ${{ secrets.PRACT_USERNAME }}
+          port: ${{ secrets.PRACT_PORT }}
+          key: ${{ secrets.PRACT_KEY }}
+          run: |
+            docker exec -it pract_php bash
+            composer install
+            
+      - name: Выполнение новых миграций
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.PRACT_HOST }}
+          username: ${{ secrets.PRACT_USERNAME }}
+          port: ${{ secrets.PRACT_PORT }}
+          key: ${{ secrets.PRACT_KEY }}
+          run: |
+            docker exec -it pract_php bash
+            php bin/console doctrine:migrations:migrate --no-interaction
