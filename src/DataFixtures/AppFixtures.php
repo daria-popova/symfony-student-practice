@@ -8,7 +8,7 @@ use App\Entity\Property;
 use App\Entity\PropertyValue;
 use App\Entity\Section;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\Common\Persistence\ObjectManager;
+use Doctrine\Persistence\ObjectManager;
 use http\Exception\InvalidArgumentException;
 use ProxyManager\Exception\FileNotWritableException;
 use Symfony\Component\Console\Output\ConsoleOutput;
