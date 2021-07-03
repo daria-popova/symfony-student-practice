@@ -39,8 +39,8 @@ jobs:
           port: ${{ secrets.PRACT_PORT }}
           key: ${{ secrets.PRACT_KEY }}
           script: |
-            docker exec -it pract_php composer install
-            
+            docker exec pract_php composer install
+
       - name: Выполнение новых миграций
         uses: appleboy/ssh-action@master
         with:
@@ -49,4 +49,4 @@ jobs:
           port: ${{ secrets.PRACT_PORT }}
           key: ${{ secrets.PRACT_KEY }}
           script: |
-            docker exec -it pract_php php bin/console doctrine:migrations:migrate --no-interaction
+            docker exec pract_php php bin/console doctrine:migrations:migrate --no-interaction
