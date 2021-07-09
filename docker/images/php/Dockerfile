@@ -1,5 +1,5 @@
 # Исходный образ
-FROM php:7.2-fpm
+FROM php:7.4-fpm
 
 # RUN выполняет идущую за ней команду в контексте нашего образа.
 # В данном случае мы установим некоторые зависимости и модули PHP.
@@ -10,17 +10,17 @@ RUN apt-get update && apt-get install -y \
     curl \
     wget \
     git \
-    libfreetype6-dev \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    libpng-dev \
+    zlib1g-dev \
+    libpq-dev \
     libicu-dev \
     libxml2-dev \
-    libpq-dev \
-    && pecl install mcrypt-1.0.1 \
-    && docker-php-ext-install -j$(nproc) intl bcmath soap pgsql pdo_pgsql zip \
-    && docker-php-ext-install -j$(nproc) gd \
-    && docker-php-ext-enable mcrypt
+    libzip-dev \
+    vim \
+    && docker-php-ext-configure intl \
+    && docker-php-ext-install intl \
+    && docker-php-ext-configure pgsql -with-pgsql=/usr/local/pgsql \
+    && docker-php-ext-install pdo pdo_pgsql pgsql \
+    && docker-php-ext-install zip xml
 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
