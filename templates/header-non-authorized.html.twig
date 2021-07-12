@@ -1,0 +1,39 @@
+<header class="bg-black">
+
+    <div class="w-full border-b-2">
+        <div class="m-auto w-max">
+            <div class="h-20 flex items-center">
+                <div class="mr-4">
+                    <img class="object-contain h-8 w-8" src="{{ link_img_logo }}" alt="{{ alt_text_logo }}">
+                </div>
+                <div class="text-white text-5xl">
+                    {{ store_title }}
+                </div>
+            </div>
+        </div>
+
+        <div class="absolute right-0">
+            <div class="relative bottom-14">
+                <ul class="flex flex-row text-lg mr-10 text-white">
+                    <li class="transform transition duration-300 hover:scale-110">
+                        <a href="{{ link_log_in }}">Вход</a>
+                    </li>
+                    <li class="transform transition duration-300 hover:scale-110 ml-12">
+                        <a href="{{ link_sign_up }}">Регистрация</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="container mx-auto">
+        <div class="h-16 flex items-center">
+            <ul class="flex flex-row justify-between ml-96 mr-96 w-full text-white">
+                {% for category in categories %}
+                    <li class="text-2xl">{{ category }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+</header>
