@@ -2,11 +2,18 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <script src="https://kit.fontawesome.com/9dc492a82d.js" crossorigin="anonymous"></script>
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
     </head>
     <body>
+        {% if app.user %}
+            {% include 'header-authorized.html.twig' %}
+        {% else %}
+            {% include 'header-non-authorized.html.twig' %}
+        {% endif %}
         {% block body %}{% endblock %}
         {% block javascripts %}{% endblock %}
+        {% include 'footer.html.twig' %}
     </body>
 </html>
